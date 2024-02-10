@@ -8,32 +8,59 @@ import 'package:provider/provider.dart';
 import 'package:testing_app/models/favorites.dart';
 import 'package:testing_app/screens/favorites.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   static const routeName = '/';
 
-  const HomePage({super.key});
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = MediaPage();
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedIndex');
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Testing Sample'),
-        actions: [
-          TextButton.icon(
-            onPressed: () {
-              context.go(FavoritesPage.fullPath);
+      body:Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: page,  // ← Here.
+            ),
+          ),
+          NavigationBar(
+            destinations: [
+              NavigationDestination(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.favorite),
+                label: 'Favorites',
+              ),
+            ],
+            selectedIndex: selectedIndex,
+            onDestinationSelected: (value) {
+              setState(() {
+                selectedIndex = value;
+              });
             },
-            icon: const Icon(Icons.favorite_border),
-            label: const Text('Favorites'),
           ),
         ],
-      ),
-      body: ListView.builder(
-        itemCount: 100,
-        cacheExtent: 20.0,
-        controller: ScrollController(),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        itemBuilder: (context, index) => ItemTile(index),
       ),
     );
   }
@@ -77,6 +104,42 @@ class ItemTile extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class MediaPage extends StatelessWidget {
+  const MediaPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Livres'),
+        actions: [
+          TextButton.icon(
+            onPressed: () {
+              print("afficher les trucs classiques");
+            },
+            icon: const Icon(Icons.book_rounded),
+            label: const Text('Classiques'),
+          ),
+          TextButton.icon(
+            onPressed: () {
+              print("afficher les trucs policiers");
+            },
+            icon: const Icon(Icons.book_rounded),
+            label: const Text('Policiers'),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: 100,
+        cacheExtent: 20.0,
+        controller: ScrollController(),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        itemBuilder: (context, index) => ItemTile(index),
       ),
     );
   }
