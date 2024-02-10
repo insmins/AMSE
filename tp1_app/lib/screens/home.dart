@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_app/models/favorites.dart';
+import 'package:testing_app/screens/about.dart';
 import 'package:testing_app/screens/favorites.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,7 +28,10 @@ class _HomePageState extends State<HomePage> {
         page = MediaPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritesPage();
+        break;
+      case 2:
+        page = AboutPage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -51,6 +55,10 @@ class _HomePageState extends State<HomePage> {
               NavigationDestination(
                 icon: Icon(Icons.favorite),
                 label: 'Favorites',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.view_headline_sharp),
+                label: 'About',
               ),
             ],
             selectedIndex: selectedIndex,
@@ -131,6 +139,13 @@ class MediaPage extends StatelessWidget {
             },
             icon: const Icon(Icons.book_rounded),
             label: const Text('Policiers'),
+          ),
+          TextButton.icon(
+            onPressed: () {
+              print("afficher les trucs SF");
+            },
+            icon: const Icon(Icons.book_rounded),
+            label: const Text('Science-Fiction'),
           ),
         ],
       ),
