@@ -34,38 +34,7 @@ class FavoritesPage extends StatelessWidget {
     );
   }
 }
-/*-----------------changer ça pour avoir un bon visu du book-----------*/
 
-/*class FavoriteItemTile extends StatelessWidget {
-  final Book itemNo;
-
-  const FavoriteItemTile(this.itemNo, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListTile(
-        title: Text(
-          'Livre ${itemNo.title}',
-          key: Key('favorite_book_$itemNo'),
-        ),
-        trailing: IconButton(
-          key: Key('remove_icon_$itemNo'),
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            context.read<Favorites>().remove(itemNo);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Enlevé des favoris'),
-                duration: Duration(seconds: 1),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }*/
 class FavoriteItemTile extends StatelessWidget {
   final Book book;
 
