@@ -97,7 +97,7 @@ class _ItemTileState extends State<ItemTile> {
     final favoritesList = context.watch<Favorites>();
 
     return Container(
-      margin: EdgeInsets.only(bottom: 16.0),
+      margin: EdgeInsets.only(bottom: 18.0,left: 25.0,right: 25.0),
         child: Row(
           children: <Widget>[
             // Image column
