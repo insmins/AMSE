@@ -42,22 +42,17 @@ class FavoriteItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150,
-      child: Row(
+    return  Row(
           children: <Widget>[
             // image colonne
             ClipRRect(
               borderRadius: const BorderRadius.all(
                 Radius.circular(10.0),
               ),
-              child: Hero(
-                tag: book.imgUrl ?? "",
                 child: Image(
                   image: AssetImage(book.imgUrl ?? ""),
                   fit: BoxFit.cover,
                   height: 150.0,
-                ),
               ),
             ),
             const SizedBox(width: 10.0), // espace entre les colonnes
@@ -67,11 +62,7 @@ class FavoriteItemTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(bottom: 16.0),
-                    child: Hero(
-                      tag: book.title,
-                      child: Material(
-                        type: MaterialType.transparency,
+                    margin: EdgeInsets.only(bottom: 5.0),
                         child: Text(
                           book.title.replaceAll(r'\', ''),
                           style: const TextStyle(
@@ -80,8 +71,6 @@ class FavoriteItemTile extends StatelessWidget {
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
                     ),
                   ),
                   Text(
@@ -103,7 +92,6 @@ class FavoriteItemTile extends StatelessWidget {
                 ],
               ),
             ),
-
             // Colonne
             IconButton(
               key: Key('remove_icon_${book.title}'),
@@ -119,8 +107,6 @@ class FavoriteItemTile extends StatelessWidget {
               },
             ),
           ],
-        ),
-
     );
   }
 

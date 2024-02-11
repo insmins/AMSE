@@ -96,37 +96,82 @@ class _ItemTileState extends State<ItemTile> {
   Widget build(BuildContext context) {
     final favoritesList = context.watch<Favorites>();
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Colors.primaries[itemNo % Colors.primaries.length],
-        ),
-        title: Text(
-          '${widget.livre.title}',
-          key: Key('text_${itemNo}'),
-        ),
-        trailing: IconButton(
-          key: Key('icon_${itemNo}'),
-          icon: favoritesList.items.contains(widget.livre)
-              ? const Icon(Icons.favorite)
-              : const Icon(Icons.favorite_border),
-          onPressed: () {
-            !favoritesList.items.contains(widget.livre)
-                ? favoritesList.add(widget.livre)
-                : favoritesList.remove(widget.livre);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(favoritesList.items.contains(widget.livre)
-                    ? 'Added to favorites.'
-                    : 'Removed from favorites.'),
-                duration: const Duration(seconds: 1),
+    return Container(
+      margin: EdgeInsets.only(bottom: 16.0),
+        child: Row(
+          children: <Widget>[
+            // Image column
+            ClipRRect(  //1er child
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10.0),
               ),
-            );
-          },
+                child: Image(
+                  image: AssetImage(widget.livre.imgUrl ?? ""),
+                  fit: BoxFit.cover,
+                  height: 150.0,
+              ),
+            ),
+            const SizedBox(width: 10.0), // espace entre les colonnes
+            // Colonne info
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(bottom: 5.0),
+                        child: Text(
+                          widget.livre.title.replaceAll(r'\', ''),
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                  ),
+                  Text(
+                    'Auteur: ${widget.livre.author}',
+                    style: const TextStyle(
+                      fontSize: 12.0,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    'Catégorie: ${widget.livre.category}',
+                    style: const TextStyle(
+                      fontSize: 12.0,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              key: Key('icon_${itemNo}'),
+              icon: favoritesList.items.contains(widget.livre)
+                  ? const Icon(Icons.favorite)
+                  : const Icon(Icons.favorite_border),
+              onPressed: () {
+                !favoritesList.items.contains(widget.livre)
+                    ? favoritesList.add(widget.livre)
+                    : favoritesList.remove(widget.livre);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(favoritesList.items.contains(widget.livre)
+                        ? 'Added to favorites.'
+                        : 'Removed from favorites.'),
+                    duration: const Duration(seconds: 1),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
-      ),
+
     );
+
   }
 }
 
