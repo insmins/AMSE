@@ -11,29 +11,46 @@ class FavoritesPage extends StatelessWidget {
   static const routeName = 'favorites_page';
   static const fullPath = '/$routeName';
 
-  const FavoritesPage({super.key}); // appelle constructeur
+  const FavoritesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favoris'),
+        title: Row(
+          children: [
+            const Text('Favoris'),
+            const SizedBox(width: 8.0), // Espace entre le texte et l'icône
+            Icon(Icons.favorite), // Icône cœur
+          ],
+        ),
       ),
-      body: Consumer<Favorites>(
-        builder: (context, value, child) => value.items.isNotEmpty
-            ? ListView.builder(
+      body: Column(
+        children: [
+          Divider( // barre
+            height: 4.0,
+            thickness: 1.0,
+          ),
+          Expanded(
+            child: Consumer<Favorites>(
+              builder: (context, value, child) => value.items.isNotEmpty
+                  ? ListView.builder(
                 itemCount: value.items.length,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 itemBuilder: (context, index) =>
                     FavoriteItemTile(book: value.items[index]),
               )
-            : const Center(
+                  : const Center(
                 child: Text('No favorites added.'),
               ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
 
 class FavoriteItemTile extends StatelessWidget {
   final Book book;
@@ -42,7 +59,9 @@ class FavoriteItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Container (
+      margin: EdgeInsets.only(bottom: 18.0,left: 25.0,right: 25.0),
+      child:  Row(
           children: <Widget>[
             // image colonne
             ClipRRect(
@@ -107,6 +126,7 @@ class FavoriteItemTile extends StatelessWidget {
               },
             ),
           ],
+     ),
     );
   }
 
