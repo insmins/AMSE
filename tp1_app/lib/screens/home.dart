@@ -96,59 +96,34 @@ class _ItemTileState extends State<ItemTile> {
   Widget build(BuildContext context) {
     final favoritesList = context.watch<Favorites>();
 
-    return Container(
-      margin: EdgeInsets.only(bottom: 18.0,left: 25.0,right: 25.0),
-        child: Row(
-          children: <Widget>[
-            // Image column
-            ClipRRect(  //1er child
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-                child: Image(
-                  image: AssetImage(widget.livre.imgUrl ?? ""),
-                  fit: BoxFit.cover,
-                  height: 150.0,
-              ),
-            ),
-            const SizedBox(width: 10.0), // espace entre les colonnes
-            // Colonne info
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5.0),
-                        child: Text(
-                          widget.livre.title.replaceAll(r'\', ''),
-                          style: const TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                  ),
-                  Text(
-                    'Auteur: ${widget.livre.author}',
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    'Catégorie: ${widget.livre.category}',
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-            IconButton(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        leading:  ClipRRect(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+          child: Image(
+            image: AssetImage(widget.livre.imgUrl ?? ""),
+            fit: BoxFit.cover,
+            height: 150.0,
+          ),
+        ),
+        title: Text(
+          widget.livre.title.replaceAll(r'\', ''),
+          style: const TextStyle(
+            fontSize: 14.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        subtitle:
+        Text(
+          'Auteur: ${widget.livre.author} ',
+          style: const TextStyle(
+            fontSize: 12.0,
+          ),
+        ),
+        trailing: IconButton(
               key: Key('icon_${itemNo}'),
               icon: favoritesList.items.contains(widget.livre)
                   ? const Icon(Icons.favorite)
@@ -167,11 +142,8 @@ class _ItemTileState extends State<ItemTile> {
                 );
               },
             ),
-          ],
         ),
-
     );
-
   }
 }
 
