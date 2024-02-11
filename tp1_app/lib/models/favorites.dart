@@ -1,22 +1,18 @@
-// Copyright 2020 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
+import 'package:TP1_app/models/book.dart';
 
-/// The [Favorites] class holds a list of favorite items saved by the user.
 class Favorites extends ChangeNotifier {
-  final List<int> _favoriteItems = [];
+  final List<Book> _favoriteBooks = [];
 
-  List<int> get items => _favoriteItems;
+  List<Book> get books => _favoriteBooks;
 
   void add(int itemNo) {
-    _favoriteItems.add(itemNo);
+    _favoriteBooks.add(itemNo);
     notifyListeners();
   }
 
   void remove(int itemNo) {
-    _favoriteItems.remove(itemNo);
+    _favoriteBooks.remove(itemNo);
     notifyListeners();
   }
 }
