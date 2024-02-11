@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:TP1_app/models/book.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,9 @@ import 'package:TP1_app/screens/favorites.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/';
+  final List<Book> livres;
 
+  const HomePage(this.livres, {super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -25,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = MediaPage();
+        page = MediaPage(widget.livres);
         break;
       case 1:
         page = FavoritesPage();
@@ -38,12 +41,15 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
-      body:Column(
+      body: Column(
         children: [
           Expanded(
             child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: page,  // ← Here.
+              color: Theme
+                  .of(context)
+                  .colorScheme
+                  .primaryContainer,
+              child: page, // ← Here.
             ),
           ),
           NavigationBar(
@@ -74,10 +80,17 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class ItemTile extends StatelessWidget {
-  final int itemNo;
+class ItemTile extends StatefulWidget {
+  final Book livre;
 
-  const ItemTile(this.itemNo, {super.key});
+  const ItemTile(this.livre, {super.key});
+
+  @override
+  State<ItemTile> createState() => _ItemTileState();
+}
+
+class _ItemTileState extends State<ItemTile> {
+  final int itemNo = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -90,18 +103,18 @@ class ItemTile extends StatelessWidget {
           backgroundColor: Colors.primaries[itemNo % Colors.primaries.length],
         ),
         title: Text(
-          'Item $itemNo',
-          key: Key('text_$itemNo'),
+          '${widget.livre.title}',
+          key: Key('text_${itemNo}'),
         ),
         trailing: IconButton(
-          key: Key('icon_$itemNo'),
+          key: Key('icon_${itemNo}'),
           icon: favoritesList.items.contains(itemNo)
               ? const Icon(Icons.favorite)
               : const Icon(Icons.favorite_border),
           onPressed: () {
             !favoritesList.items.contains(itemNo)
-                ? favoritesList.add(itemNo)
-                : favoritesList.remove(itemNo);
+                ? favoritesList.add(widget.livre)
+                : favoritesList.remove(widget.livre);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(favoritesList.items.contains(itemNo)
@@ -117,45 +130,96 @@ class ItemTile extends StatelessWidget {
   }
 }
 
-class MediaPage extends StatelessWidget {
-  const MediaPage({super.key});
+class MediaPage extends StatefulWidget {
+  final List<Book> livres;
+  const MediaPage(this.livres, {super.key});
+
+  @override
+  State<MediaPage> createState() => _MediaPageState();
+}
+
+class _MediaPageState extends State<MediaPage> {
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Livres'),
-        actions: [
-          TextButton.icon(
-            onPressed: () {
-              print("afficher les trucs classiques");
-            },
-            icon: const Icon(Icons.book_rounded),
-            label: const Text('Classiques'),
-          ),
-          TextButton.icon(
-            onPressed: () {
-              print("afficher les trucs policiers");
-            },
-            icon: const Icon(Icons.book_rounded),
-            label: const Text('Policiers'),
-          ),
-          TextButton.icon(
-            onPressed: () {
-              print("afficher les trucs SF");
-            },
-            icon: const Icon(Icons.book_rounded),
-            label: const Text('Science-Fiction'),
-          ),
-        ],
+    List<Book> classiques = [];
+    List<Book> policiers = [];
+    List<Book> sf = [];
+    for(int i = 0; i < widget.livres.length; i++){
+      switch(widget.livres[i].category){
+        case "Classiques":
+          classiques.add(widget.livres[i]);
+          break;
+        case "Policiers":
+          policiers.add(widget.livres[i]);
+          break;
+        case "Science-fiction":
+          sf.add(widget.livres[i]);
+          break;
+      }
+    }
+
+    Widget listview_c = ListView.builder(
+      itemCount: classiques.length,
+      cacheExtent: 20.0,
+      controller: ScrollController(),
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      itemBuilder: (context, index) => ItemTile(
+          classiques[index]
       ),
-      body: ListView.builder(
-        itemCount: 100,
-        cacheExtent: 20.0,
-        controller: ScrollController(),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        itemBuilder: (context, index) => ItemTile(index),
+    );
+
+    Widget listview_p = ListView.builder(
+      itemCount: policiers.length,
+      cacheExtent: 20.0,
+      controller: ScrollController(),
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      itemBuilder: (context, index) => ItemTile(
+          policiers[index]
       ),
+    );
+
+    Widget listview_s = ListView.builder(
+      itemCount: sf.length,
+      cacheExtent: 20.0,
+      controller: ScrollController(),
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      itemBuilder: (context, index) => ItemTile(
+          sf[index]
+      ),
+    );
+
+    return DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Livres'),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.book_rounded),
+                  text: "Classiques",
+                ),
+                Tab(
+                  icon: Icon(Icons.local_police),
+                  text: "Policiers",
+                ),
+                Tab(
+                  icon: Icon(Icons.rocket_launch),
+                  text: "Science-Fiction",
+                ),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              listview_c,
+              listview_p,
+              listview_s,
+            ],
+          ),
+        ),
     );
   }
 }

@@ -9,16 +9,25 @@ import 'package:TP1_app/models/favorites.dart';
 import 'package:TP1_app/screens/favorites.dart';
 import 'package:TP1_app/screens/home.dart';
 
+import 'models/book.dart';
+
 void main() {
   runApp(const TestingApp());
 }
+
+List<Book> livres =
+[
+  new Book("livre classique 1", "_author", "Classiques", false, "_desc"),
+  new Book("livre policier 1", "_author", "Policiers", false, "_desc"),
+  new Book("livre classique deux", "_author", "Classiques", false, "_desc")
+];
 
 GoRouter router() {
   return GoRouter(
     routes: [
       GoRoute(
         path: HomePage.routeName,
-        builder: (context, state) => HomePage(),
+        builder: (context, state) => HomePage(livres),
         routes: [
           GoRoute(
             path: FavoritesPage.routeName,

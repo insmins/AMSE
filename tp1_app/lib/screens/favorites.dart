@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:TP1_app/models/favorites.dart';
 
+import '../models/book.dart';
+
 class FavoritesPage extends StatelessWidget {
   static const routeName = 'favorites_page';
   static const fullPath = '/$routeName';
@@ -14,7 +16,7 @@ class FavoritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Text("jrnf"); /*Scaffold(
       appBar: AppBar(
         title: const Text('Favorites'),
       ),
@@ -30,14 +32,14 @@ class FavoritesPage extends StatelessWidget {
                 child: Text('No favorites added.'),
               ),
       ),
-    );
+    );*/
   }
 }
 
 class FavoriteItemTile extends StatelessWidget {
-  final int itemNo;
+  final Book livre;
 
-  const FavoriteItemTile(this.itemNo, {super.key});
+  const FavoriteItemTile(this.livre, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,17 +47,17 @@ class FavoriteItemTile extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: Colors.primaries[itemNo % Colors.primaries.length],
+          backgroundColor: Colors.red,
         ),
         title: Text(
-          'Item $itemNo',
-          key: Key('favorites_text_$itemNo'),
+          'Item $livre',
+          key: Key('favorites_text_$livre'),
         ),
         trailing: IconButton(
-          key: Key('remove_icon_$itemNo'),
+          key: Key('remove_icon_$livre'),
           icon: const Icon(Icons.close),
           onPressed: () {
-            context.read<Favorites>().remove(itemNo);
+            context.read<Favorites>().remove(livre);
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Removed from favorites.'),
