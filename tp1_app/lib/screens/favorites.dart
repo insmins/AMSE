@@ -16,7 +16,7 @@ class FavoritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("jrnf"); /*Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text('Favorites'),
       ),
@@ -32,7 +32,7 @@ class FavoritesPage extends StatelessWidget {
                 child: Text('No favorites added.'),
               ),
       ),
-    );*/
+    );
   }
 }
 
@@ -50,7 +50,7 @@ class FavoriteItemTile extends StatelessWidget {
           backgroundColor: Colors.red,
         ),
         title: Text(
-          'Item $livre',
+          livre.title,
           key: Key('favorites_text_$livre'),
         ),
         trailing: IconButton(
