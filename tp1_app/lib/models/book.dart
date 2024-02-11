@@ -1,16 +1,23 @@
 class Book {
-  String imgUrl;
-  String title;
-  String author;
-  String category;
-  bool isFavorite;
-  String desc;
+  String? _imgUrl; // _ vaut dire que la variable est privée
+  String _title;
+  String _author;
+  String _category;
+  bool _isFavorite;
+  String _desc;
 
-  Book(this.imgUrl,
-      this.title,
-      this.author,
-      this.category,
-      this.isFavorite,
-      this.desc,);
+  Book(/*this._imgUrl,*/ this._title, this._author, this._category, this._isFavorite, this._desc);
+
+ /*------------------ Getters ------------------*/
+  String? get imgUrl => _imgUrl;
+  String get title => _title;
+  String get author => _author;
+  String get category => _category;
+  bool get isFavorite => _isFavorite;
+  String get desc => _desc;
+/*---------------- isFavorite Setter-------------*/
+  set isFavorite(bool value) {
+    _isFavorite = value;
+  }
 
 }
