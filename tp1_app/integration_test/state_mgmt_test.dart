@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:provider/provider.dart';
-import 'package:testing_app/models/favorites.dart';
-import 'package:testing_app/screens/favorites.dart';
+import 'package:TP1_app/models/favorites.dart';
+import 'package:TP1_app/screens/favorites.dart';
 
 late Favorites favoritesList;
 

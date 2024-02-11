@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:testing_app/models/favorites.dart';
+import 'package:TP1_app/models/favorites.dart';
 
 class FavoritesPage extends StatelessWidget {
   static const routeName = 'favorites_page';

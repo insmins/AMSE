@@ -1,4 +1,4 @@
-name: testing_app
+name: TP1_app
 description: A sample that shows testing in Flutter.
 
 version: 1.0.0+1
@@ -15,8 +15,6 @@ dependencies:
   go_router: ">=10.0.0 <14.0.0"
 
 dev_dependencies:
-  analysis_defaults:
-    path: ../analysis_defaults
   integration_test:
     sdk: flutter
   flutter_test:
