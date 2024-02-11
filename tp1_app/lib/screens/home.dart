@@ -108,16 +108,16 @@ class _ItemTileState extends State<ItemTile> {
         ),
         trailing: IconButton(
           key: Key('icon_${itemNo}'),
-          icon: favoritesList.items.contains(itemNo)
+          icon: favoritesList.items.contains(widget.livre)
               ? const Icon(Icons.favorite)
               : const Icon(Icons.favorite_border),
           onPressed: () {
-            !favoritesList.items.contains(itemNo)
+            !favoritesList.items.contains(widget.livre)
                 ? favoritesList.add(widget.livre)
                 : favoritesList.remove(widget.livre);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(favoritesList.items.contains(itemNo)
+                content: Text(favoritesList.items.contains(widget.livre)
                     ? 'Added to favorites.'
                     : 'Removed from favorites.'),
                 duration: const Duration(seconds: 1),
