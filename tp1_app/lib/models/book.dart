@@ -6,7 +6,7 @@ class Book {
   bool _isFavorite;
   String _desc;
 
-  Book(/*this._imgUrl,*/ this._title, this._author, this._category, this._isFavorite, this._desc);
+  Book(this._title, this._author, this._category, this._isFavorite, this._desc, [this._imgUrl]);
 
  /*------------------ Getters ------------------*/
   String? get imgUrl => _imgUrl;
