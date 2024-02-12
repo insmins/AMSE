@@ -70,7 +70,7 @@ class TestingApp extends StatelessWidget {
     return ChangeNotifierProvider<Favorites>(
       create: (context) => Favorites(),
       child: MaterialApp.router(
-        title: 'Testing Sample',
+        title: 'TP1_app',
         theme: ThemeData(
           colorSchemeSeed: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
