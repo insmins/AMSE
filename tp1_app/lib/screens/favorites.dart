@@ -61,44 +61,47 @@ class FavoriteItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ListTile(
-        leading:  ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-          child: Image(
-            image: AssetImage(book.imgUrl ?? ""),
-            fit: BoxFit.cover,
-            height: 150.0,
-          ),
-        ),
-        title: Text(
-          book.title.replaceAll(r'\', ''),
-          style: const TextStyle(
-            fontSize: 14.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        subtitle:
-            Text(
-              'Auteur: ${book.author}\nCatégorie: ${book.category} ',
-              style: const TextStyle(
-                fontSize: 12.0,
-              ),
+      child: Tooltip(
+        child: ListTile(
+          leading:  ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10.0),
             ),
-        trailing: IconButton(
-          key: Key('remove_icon_$book'),
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            context.read<Favorites>().remove(book);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Removed from favorites.'),
-                duration: Duration(seconds: 1),
+            child: Image(
+              image: AssetImage(book.imgUrl ?? ""),
+              fit: BoxFit.cover,
+              height: 150.0,
+            ),
+          ),
+          title: Text(
+            book.title.replaceAll(r'\', ''),
+            style: const TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle:
+              Text(
+                'Auteur: ${book.author}\nCatégorie: ${book.category} ',
+                style: const TextStyle(
+                  fontSize: 12.0,
+                ),
               ),
-            );
-          },
+          trailing: IconButton(
+            key: Key('remove_icon_$book'),
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              context.read<Favorites>().remove(book);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Removed from favorites.'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+          ),
         ),
+        message: "Titre : " + book.title + "\nAuteur : " + book.author + "\nCatégorie : " + book.category + "\nDescription : " + book.desc,
       ),
     );
   }

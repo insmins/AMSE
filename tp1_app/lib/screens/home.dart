@@ -98,51 +98,54 @@ class _ItemTileState extends State<ItemTile> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ListTile(
-        leading:  ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10.0),
-          ),
-          child: Image(
-            image: AssetImage(widget.livre.imgUrl ?? ""),
-            fit: BoxFit.cover,
-            height: 150.0,
-          ),
-        ),
-        title: Text(
-          widget.livre.title.replaceAll(r'\', ''),
-          style: const TextStyle(
-            fontSize: 14.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        subtitle:
-        Text(
-          'Auteur: ${widget.livre.author} ',
-          style: const TextStyle(
-            fontSize: 12.0,
-          ),
-        ),
-        trailing: IconButton(
-              key: Key('icon_${itemNo}'),
-              icon: favoritesList.items.contains(widget.livre)
-                  ? const Icon(Icons.favorite)
-                  : const Icon(Icons.favorite_border),
-              onPressed: () {
-                !favoritesList.items.contains(widget.livre)
-                    ? favoritesList.add(widget.livre)
-                    : favoritesList.remove(widget.livre);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(favoritesList.items.contains(widget.livre)
-                        ? 'Added to favorites.'
-                        : 'Removed from favorites.'),
-                    duration: const Duration(seconds: 1),
-                  ),
-                );
-              },
+      child: Tooltip(
+        child: ListTile(
+          leading:  ClipRRect(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10.0),
             ),
-        ),
+            child: Image(
+              image: AssetImage(widget.livre.imgUrl ?? ""),
+              fit: BoxFit.cover,
+              height: 150.0,
+            ),
+          ),
+          title: Text(
+            widget.livre.title.replaceAll(r'\', ''),
+            style: const TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle:
+          Text(
+            'Auteur: ${widget.livre.author} ',
+            style: const TextStyle(
+              fontSize: 12.0,
+            ),
+          ),
+          trailing: IconButton(
+                key: Key('icon_${itemNo}'),
+                icon: favoritesList.items.contains(widget.livre)
+                    ? const Icon(Icons.favorite)
+                    : const Icon(Icons.favorite_border),
+                onPressed: () {
+                  !favoritesList.items.contains(widget.livre)
+                      ? favoritesList.add(widget.livre)
+                      : favoritesList.remove(widget.livre);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(favoritesList.items.contains(widget.livre)
+                          ? 'Added to favorites.'
+                          : 'Removed from favorites.'),
+                      duration: const Duration(seconds: 1),
+                    ),
+                  );
+                },
+              ),
+          ),
+        message: "Titre : " + widget.livre.title + "\nAuteur : " + widget.livre.author + "\nDescription : " + widget.livre.desc,
+      ),
     );
   }
 }
