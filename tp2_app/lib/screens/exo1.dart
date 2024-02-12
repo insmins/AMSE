@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class exo1 extends StatelessWidget {
-  const exo1({super.key});
+class Exo1 extends StatelessWidget {
+  const Exo1({super.key});
 
   @override
   Widget build(BuildContext context) {
