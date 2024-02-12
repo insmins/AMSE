@@ -8,7 +8,30 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("Page a propos"),
+
+      body: Container (
+        alignment: Alignment.center,
+          child : Column (
+            mainAxisAlignment: MainAxisAlignment.center,
+
+        children : <Widget>[
+          Text(
+            'About this app',
+            style: const TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+              ),
+          ),
+            Text(
+              'Cette application permet de parcourir des livres en fonction de leur catégorie et les rajouter en favoris❤',
+              style: const TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+    ],
+      )
+
+    )
     );
   }
 }
