@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class exo2 extends StatefulWidget {
-  const exo2({super.key});
+class Exo2 extends StatefulWidget {
+  const Exo2({super.key});
 
   @override
-  State<exo2> createState() => _exo2State();
+  State<Exo2> createState() => _Exo2State();
 }
 
-class _exo2State extends State<exo2> {
+class _Exo2State extends State<Exo2> {
   double _currentSliderValue = 20;
 
   @override
