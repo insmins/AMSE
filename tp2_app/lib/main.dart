@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tp2_app/home.dart';
 import 'package:tp2_app/screens/exo1.dart';
+import 'package:tp2_app/screens/exo2.dart';
 import 'package:tp2_app/screens/exo4.dart';
 void main() {
   runApp(const MyApp());
 }
 
-List <Exercice> exo =[ Exercice("exercice 1", "afficher une image", const Exo1()),Exercice("exercice 4", "Affichage d'une tuile (un morceau d'image)", const DisplayTileWidget()),];
+List <Exercice> exo =[ Exercice("exercice 1", "afficher une image", const Exo1()), Exercice("exercice 2", "transformer une image", const exo2()), Exercice("exercice 4", "Affichage d'une tuile (un morceau d'image)", const DisplayTileWidget()),];
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
