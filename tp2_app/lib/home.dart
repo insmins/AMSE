@@ -24,6 +24,7 @@ class HomeMenuScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(exercices[index].title),
+            subtitle: Text(exercices[index].description),
             onTap: () {
               Navigator.push(
                 context,
