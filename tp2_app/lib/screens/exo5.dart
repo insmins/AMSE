@@ -1,10 +1,13 @@
 
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tp2_app/screens/exo4.dart';
+import 'package:tp2_app/screens/exo2.dart';
 
 class Exo5 extends StatefulWidget {
-  const Exo5({Key? key});
+  final bool isVisible;
+  const Exo5({super.key, required this.isVisible});
 
   @override
   State<Exo5> createState() => _Exo5State();
@@ -13,6 +16,8 @@ class Exo5 extends StatefulWidget {
 class _Exo5State extends State<Exo5> {
 
   double _currentSliderValue = 3.0;
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -30,12 +35,12 @@ class _Exo5State extends State<Exo5> {
 
       return tileAlignments;
     }
-    List <double> generateParam (double currentSliderValue){
-      List <double> param = [];
-      param.add(1/_currentSliderValue);
+    double generateParam (double currentSliderValue){
+      double param;
+      param = (1/_currentSliderValue);
       return param;
     }
-    List<double> param = generateParam(_currentSliderValue);
+    double param = generateParam(_currentSliderValue);
 
     List<Alignment> tileAlignements = generateTileAlignments(_currentSliderValue);
 
@@ -43,8 +48,14 @@ class _Exo5State extends State<Exo5> {
     List<Tile> tile = [];
     for (int i = 0; i < tileAlignements.length; i++) {
       //on créé tout les tiles
-      tile.add(Tile(imageURL: 'https://picsum.photos/512', alignment: tileAlignements[i]));
+      tile.add(Tile(imageURL: 'https://picsum.photos/512',
+          alignment: tileAlignements[i]));
+    }
 
+    // on fait une liste avec les widgetTiles (portion de l'image) grâce à _getTiles
+    List <Widget> widgetTiles = [];
+      for (int i = 0; i < tile.length; i++) {
+        widgetTiles.add(_getTile(tile[i],param));
     }
     return Scaffold(
       appBar: AppBar(
@@ -69,9 +80,14 @@ class _Exo5State extends State<Exo5> {
                       childAspectRatio:1, // a changer
                       children: List.generate(
                         tileAlignements.length,
-                            (index) => Container(
-                          child: _getTile(index, tile[index], param[_currentSliderValue.toInt()-2]),
-                        ),
+                            (index) => FloatingActionButton(
+                              onPressed: () {Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => Exo2(),
+                              ));},
+                              child: Container(
+                                                        child: widgetTiles[index],
+                                                      ),
+                            ),
                       ),
                     ),
                   ),
@@ -79,37 +95,65 @@ class _Exo5State extends State<Exo5> {
 
                 Center(
                   child: SizedBox(
-                    width: 350,
-                    height: 100,
-                      child: Row(
+                    width: 320,
+                    height: 200,
+                      child: Column(
                         children: [
-                          const Text(
-                            'Size',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          Center(
+                            child: Row(
+                                  children: [
+                                    const Text(
+                                      'Choisir une \n difficulté',
+                                      style: TextStyle(
+                                        fontSize: 11.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
 
+                                    SizedBox(
+                                      width: 250,
+                                      height: 100,
+                                      child: Slider(
+                                        value: _currentSliderValue,
+                                        min: 2,
+                                        max: 10,
+                                        divisions: 8,
+                                        label: _currentSliderValue.round().toString(),
+                                        onChanged: (double value) {
+                                          setState(() {
+                                            _currentSliderValue = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                          ),
                           SizedBox(
-                            width: 300,
-                            height: 100,
-                            child: Slider(
-                              value: _currentSliderValue,
-                              min: 2,
-                              max: 10,
-                              divisions: 8,
-                              label: _currentSliderValue.round().toString(),
-                              onChanged: (double value) {
-                                setState(() {
-                                  _currentSliderValue = value;
-                                });
-                              },
+                            width: 90,
+                            child: Visibility(
+                              visible: widget.isVisible,
+                              child: FloatingActionButton(
+                                  onPressed: () {Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => Exo2(),
+                                  ));},
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.play_arrow),
+                                        Text(" Jouer")
+                                      ],
+                                    ),
+                                  )
+                              ),
+                            
                             ),
                           ),
                         ],
                       ),
-                    ),
+
+                      ),
                   ),
               ],
             ),
@@ -119,7 +163,7 @@ class _Exo5State extends State<Exo5> {
     );
   }
 
-  Widget _getTile(int index, Tile tile, double param) {
+  Widget _getTile(Tile tile, double param) {
 
     return Center(
       child: Column(
