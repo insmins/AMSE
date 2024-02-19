@@ -28,7 +28,8 @@ class _Exo2State extends State<Exo2> {
                     height: 192,
                     width: 108,
                 )
-            )
+            ),
+            alignment: Alignment.center,
           ),
           Row(children: [
             Slider(
