@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Tile {
@@ -10,14 +11,14 @@ class Tile {
 
   Tile({required this.imageURL, required this.alignment});
 
-  Widget croppedImageTile() {
+  Widget croppedImageTile(double  widthFactor, double heightFactor) {
     return FittedBox(
       fit: BoxFit.fill,
       child: ClipRect(
         child: Align(
           alignment: alignment,
-          widthFactor: 0.3,
-          heightFactor: 0.3,
+          widthFactor: widthFactor,
+          heightFactor: heightFactor,
           child: Image.network(imageURL),
         ),
       ),
@@ -26,7 +27,7 @@ class Tile {
 }
 
 Tile tile = Tile(
-    imageURL: 'https://picsum.photos/512', alignment: const Alignment(-1, -1));
+    imageURL: 'https://picsum.photos/512', alignment: const Alignment(0,0));
 
 class DisplayTileWidget extends StatelessWidget {
   const DisplayTileWidget({super.key});
@@ -46,18 +47,19 @@ class DisplayTileWidget extends StatelessWidget {
                     height: 150.0,
                     child: Container(
                         margin: const EdgeInsets.all(20.0),
-                        child: createTileWidgetFrom(tile))),
-            SizedBox(
+                        child: this.createTileWidgetFrom(tile))),
+            Container(
                 height: 200,
                 child: Image.network('https://picsum.photos/512',
-                    fit: BoxFit.cover))
+                    fit: BoxFit.cover
+                ))
           ])),
     );
   }
 
   Widget createTileWidgetFrom(Tile tile) {
     return InkWell(
-      child: tile.croppedImageTile(),
+      child: tile.croppedImageTile(0.3,0.3),
       onTap: () {
         print("La tuile a été tapée !");
       },

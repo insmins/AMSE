@@ -6,8 +6,17 @@ class Exo1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Image(
-      image: NetworkImage("https://picsum.photos/512/1024"),
+    return Scaffold(
+      appBar: AppBar(
+
+        title: const Text('Display a Tile as a Cropped Image'),
+        centerTitle: true,
+      ),
+        body : const Center(
+          child : Image(
+          image: NetworkImage("https://picsum.photos/512/1024"),
+        ),
+        ),
     );
   }
 }
