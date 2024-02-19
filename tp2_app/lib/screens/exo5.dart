@@ -30,7 +30,12 @@ class _Exo5State extends State<Exo5> {
 
       return tileAlignments;
     }
-    List<double> param = [0.5,0.33,0.25,0.2,0.167,0.1428,0.125,0.1111,0.1];
+    List <double> generateParam (double currentSliderValue){
+      List <double> param = [];
+      param.add(1/_currentSliderValue);
+      return param;
+    }
+    List<double> param = generateParam(_currentSliderValue);
 
     List<Alignment> tileAlignements = generateTileAlignments(_currentSliderValue);
 
