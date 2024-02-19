@@ -45,70 +45,70 @@ class _Exo5State extends State<Exo5> {
       appBar: AppBar(
         title: const Text('Plateau de tuiles'),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Center(
-              child: SizedBox(
-                width: 600,
-                height: 380,
-                child: GridView.count(
-                  primary: false,
-                  padding: const EdgeInsets.all(20),
-                  crossAxisSpacing: 1,
-                  mainAxisSpacing: 1,
-                  crossAxisCount: _currentSliderValue.toInt(),
+      body: SingleChildScrollView(
+        child:
+          Center(
+            child: Column(
+              children: [
+                Center(
+                  child: SizedBox(
+                    width: 380,
+                    height: 380,
+                    child: GridView.count(
+                      primary: false,
+                      padding: const EdgeInsets.all(20),
+                      crossAxisSpacing: 1,
+                      mainAxisSpacing: 1,
+                      crossAxisCount: _currentSliderValue.toInt(),
 
-                  childAspectRatio:1, // a changer
-                  children: List.generate(
-                    tileAlignements.length,
-                        (index) => Container(
-                      child: _getTile(index, tile[index], param[_currentSliderValue.toInt()-2]),
+                      childAspectRatio:1, // a changer
+                      children: List.generate(
+                        tileAlignements.length,
+                            (index) => Container(
+                          child: _getTile(index, tile[index], param[_currentSliderValue.toInt()-2]),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-                height: 100,
-                child: Image.network('https://picsum.photos/512',
-                    fit: BoxFit.cover)),
-            Center(
-              child: SizedBox(
-                width: 350,
-                height: 100,
-                  child: Row(
-                    children: [
-                      const Text(
-                        'Size',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
 
-                      SizedBox(
-                        width: 300,
-                        height: 100,
-                        child: Slider(
-                          value: _currentSliderValue,
-                          min: 2,
-                          max: 10,
-                          divisions: 8,
-                          label: _currentSliderValue.round().toString(),
-                          onChanged: (double value) {
-                            setState(() {
-                              _currentSliderValue = value;
-                            });
-                          },
-                        ),
+                Center(
+                  child: SizedBox(
+                    width: 350,
+                    height: 100,
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Size',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          SizedBox(
+                            width: 300,
+                            height: 100,
+                            child: Slider(
+                              value: _currentSliderValue,
+                              min: 2,
+                              max: 10,
+                              divisions: 8,
+                              label: _currentSliderValue.round().toString(),
+                              onChanged: (double value) {
+                                setState(() {
+                                  _currentSliderValue = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-          ],
-        ),
+              ],
+            ),
+          ),
       ),
 
     );
@@ -120,8 +120,6 @@ class _Exo5State extends State<Exo5> {
       child: Column(
         children: [
           SizedBox(
-            /*width: 50.0,
-            height: 50.0,*/
             child: Container(
               child: createTileWidgetFrom(tile, param)
             )
