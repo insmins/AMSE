@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+// ==============
+// Models
+// ==============
+
+
 class Tile {
   String imageURL;
   /* Explication alignement : ---------------------------------------
