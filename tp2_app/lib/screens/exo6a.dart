@@ -7,13 +7,24 @@ import 'dart:math' as math;
 
 math.Random random = math.Random();
 
-class TileExo6a {
+class TileExo6 {
   late Color color;
-  TileExo6a(this.color);
+  late bool isClickable;
+  late bool isTileVoid;
+  late int numberTile;
+  TileExo6( this.color, this.isClickable, this.isTileVoid, this.numberTile);
 
-    TileExo6a.randomColor() {
-      this.color = Color.fromARGB(
+    TileExo6.randomColor() {
+      this.color= Color.fromARGB(
         255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+  }
+  TileExo6.construct(int numberTile) {
+    this.color= Color.fromARGB(
+        255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+    this.numberTile = numberTile;
+    this.isClickable = false;
+    this.isTileVoid = false;
+
   }
 }
 
@@ -28,7 +39,7 @@ class PositionedTiles extends StatefulWidget {
   State<StatefulWidget> createState() => PositionedTilesState();
 }
 
-Widget coloredBox(TileExo6a tile) {
+Widget coloredBox(TileExo6 tile) {
   return Container(
       color: tile.color,
       child: const Padding(
@@ -39,9 +50,9 @@ Widget coloredBox(TileExo6a tile) {
 class PositionedTilesState extends State<PositionedTiles> {
 
 
-  List<TileExo6a> tiles = List<TileExo6a>.generate(
+  List<TileExo6> tiles = List<TileExo6>.generate(
       2,
-          (index) => TileExo6a.randomColor(),
+          (index) => TileExo6.randomColor(),
     );
 
 
