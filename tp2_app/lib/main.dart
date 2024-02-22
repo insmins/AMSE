@@ -4,18 +4,19 @@ import 'package:tp2_app/screens/exo1.dart';
 import 'package:tp2_app/screens/exo4.dart';
 import 'package:tp2_app/screens/exo5.dart';
 import 'package:tp2_app/screens/exo2.dart';
-import 'package:tp2_app/screens/exo6.dart';
+import 'package:tp2_app/screens/exo5a.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 List <Exercice> exo =[
-  Exercice("exercice 1", "afficher une image", const Exo1()),
-  Exercice("exercice 2", "transformer une image", const Exo2()),
-  Exercice("exercice 4", "Affichage d'une tuile (un morceau d'image)", const DisplayTileWidget()),
-  Exercice("exercice 5", "Génération du plateau de tuiles", const Exo5()),
-  Exercice("exercice 6", "frfr", PositionedTiles()),
+  Exercice("Exercice 1", "afficher une image", const Exo1()),
+  Exercice("Exercice 2", "transformer une image", const Exo2()),
+  Exercice("Exercice 4", "Affichage d'une tuile (un morceau d'image)", const DisplayTileWidget()),
+  Exercice("Exercice 5a", "Fixed grid of cropped image", Exo5a()),
+  Exercice("Exercice 5b", "Configurable Taquin Board",  Exo5b(isVisible: true,)),
+
 
 ];
 class MyApp extends StatelessWidget {

@@ -19,21 +19,23 @@ class _Exo2State extends State<Exo2> {
     return Scaffold(
       appBar: AppBar(title: const Text('Transformation d\'images')),
       body: SingleChildScrollView(
+        padding:const EdgeInsets.only(top: 50, bottom: 30),
         child: Column(
           children:[
-            Transform(
-              transform: Matrix4.skewY(_sliderSki)..rotateZ(_sliderHorloge)..leftTranslate(_sliderDepl),
-              alignment: Alignment.center,
+            SizedBox(
+              height: 400,
+              width: 200,
+              child: Transform(
+                transform: Matrix4.skewY(_sliderSki)..rotateZ(_sliderHorloge)..leftTranslate(_sliderDepl),
+                alignment: Alignment.center,
+                  child: const Image(
+                      image: ResizeImage(
+                          NetworkImage("https://picsum.photos/512/1024"),
+                          height: 192,
+                          width: 108,
+                      )
 
-                /*height: 200,
-                width: 200,*/
-                child: const Image(
-                    image: ResizeImage(
-                        NetworkImage("https://picsum.photos/512/1024"),
-                        height: 192,
-                        width: 108,
-                    )
-
+                ),
               ),
             ),
             Row(children: [
