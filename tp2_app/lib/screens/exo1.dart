@@ -9,13 +9,15 @@ class Exo1 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
 
-        title: const Text('Display a Tile as a Cropped Image'),
+        title: const Text('Display an Image'),
         centerTitle: true,
       ),
         body : const Center(
-          child : Image(
-          image: NetworkImage("https://picsum.photos/512/1024"),
-        ),
+          child : SingleChildScrollView(
+            child: Image(
+            image: NetworkImage("https://picsum.photos/512/1024"),
+                    ),
+          ),
         ),
     );
   }
