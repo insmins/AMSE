@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tp2_app/screens/exo4.dart';
-import 'package:tp2_app/screens/exo2.dart';
+
+
+import 'exo7.dart';
 
 class Exo5b extends StatefulWidget {
   final bool isVisible;
@@ -17,9 +19,6 @@ class Exo5b extends StatefulWidget {
 Widget createTileWidgetFrom(Tile tile, double param, BuildContext context) {
   return InkWell(
     child: tile.croppedImageTile(param,param), // a changer
-    onTap: () {
-      print("Tuile tapée !");
-    },
   );
 }
 
@@ -134,7 +133,7 @@ class _Exo5bState extends State<Exo5b> {
                               visible: widget.isVisible,
                               child: FloatingActionButton(
                                   onPressed: () {Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => Exo2(),
+                                    builder: (context) => Exo7(tiles: widgetTiles,numberOfRows: _currentSliderValue,),
                                   ));},
                                   child: const Padding(
                                     padding: EdgeInsets.all(8.0),

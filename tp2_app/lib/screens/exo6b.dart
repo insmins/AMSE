@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tp2_app/screens/exo4.dart';
 import 'package:tp2_app/screens/exo6a.dart';
 // ==============
 // Widgets
@@ -43,6 +41,7 @@ class PositionedTilesState extends State<Exo6b> {
       }
       },
       );
+
   @override
   void initState() {
     super.initState();
