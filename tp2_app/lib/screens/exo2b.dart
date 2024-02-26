@@ -1,34 +1,59 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Exo2 extends StatefulWidget {
-  const Exo2({super.key});
+class Exo2b extends StatefulWidget {
+  const Exo2b({super.key});
 
   @override
-  State<Exo2> createState() => _Exo2State();
+  State<Exo2b> createState() => _Exo2bState();
 }
 
-class _Exo2State extends State<Exo2> {
+class _Exo2bState extends State<Exo2b> {
   double _sliderSki = 0.0;
   double _sliderHorloge = 0.0;
   double _sliderDepl = 0.0;
-  bool mirror = false;
+  bool flagSliderSki = true;
+  bool flagSliderDepl = true;
+  bool flagSliderHorloge = true;
 
   @override
   Widget build(BuildContext context) {
-    Matrix4 transfo;
-    if(mirror) {
-      transfo = Matrix4.skewY(_sliderSki)
-        ..rotateZ(_sliderHorloge)
-        ..leftTranslate(_sliderDepl)
-        ..scale(-1, 1);
+    void animate(Timer t){
+      setState(() {
+        if (1-0.05 < _sliderSki) {
+          flagSliderSki = false;
+        }
+        else if (_sliderSki < 0+0.05) {
+          flagSliderSki = true;
+        }
+        _sliderSki = flagSliderSki?_sliderSki+0.1:_sliderSki-0.1;
+
+        if (_sliderDepl > 100-2) {
+          flagSliderDepl = false;
+        }
+        else if (_sliderDepl < 0+1) {
+          flagSliderDepl = true;
+        }
+        _sliderDepl = flagSliderDepl?_sliderDepl+2:_sliderDepl-2;
+
+        if (_sliderHorloge > 2*pi-pi/8) {
+          flagSliderHorloge = false;
+        }
+        else if (_sliderHorloge < 0+pi/8) {
+          flagSliderHorloge = true;
+        }
+        _sliderHorloge = flagSliderHorloge?_sliderHorloge+pi/8:_sliderHorloge-pi/8;
+      });
+      t.cancel();
     }
-    else {
-      transfo = Matrix4.skewY(_sliderSki)
-        ..rotateZ(_sliderHorloge)
-        ..leftTranslate(_sliderDepl);
-    }
+
+    const d = const Duration(milliseconds: 100);
+    Timer timer = new Timer.periodic(d, animate);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Transformation d\'images')),
       body: SingleChildScrollView(
@@ -39,7 +64,7 @@ class _Exo2State extends State<Exo2> {
               height: 400,
               width: 200,
               child: Transform(
-                transform: transfo,
+                transform: Matrix4.skewY(_sliderSki)..rotateZ(_sliderHorloge)..leftTranslate(_sliderDepl),
                 alignment: Alignment.center,
                   child: const Image(
                       image: ResizeImage(
@@ -63,13 +88,13 @@ class _Exo2State extends State<Exo2> {
                   });
                 },
               ),
-              Text("Cisaillement"),
+              Text("Cisaillement"+pi.toString()),
             ]
             ),
             Row(children: [
               Slider(
                 value: _sliderHorloge,
-                max: 6.28,
+                max: 2*pi,
                 divisions: 16,
                 label: _sliderHorloge.toString(),
                 onChanged: (double value) {
@@ -84,8 +109,8 @@ class _Exo2State extends State<Exo2> {
             Row(children: [
               Slider(
                 value: _sliderDepl,
-                max: 30,
-                divisions: 15,
+                max: 100,
+                divisions: 50,
                 label: _sliderDepl.toString(),
                 onChanged: (double value) {
                   setState(() {
@@ -96,18 +121,10 @@ class _Exo2State extends State<Exo2> {
               Text("Translation"),
             ]
             ),
-            Checkbox(
-                value: mirror,
-                onChanged: (f){
-                  if (f != null){
-                    setState(() {
-                      mirror = !mirror;
-                    });
-                  }
-                })
           ]
         ),
       ),
     );
   }
 }
+
