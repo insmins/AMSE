@@ -164,7 +164,7 @@ class _Exo7aState extends State<Exo7a> {
                                       child: Row(
                                         children: [
                                           Icon(Icons.play_arrow),
-                                          Text(" Jouer")
+                                          Text("Jouer")
                                         ],
                                       ),
                                     )

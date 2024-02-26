@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:tp2_app/screens/exo1.dart';
 import 'package:tp2_app/screens/exo4.dart';
 
 
@@ -16,8 +18,9 @@ class WidgetTile {
   late Widget tile;
   late bool isClickable;
   late bool isTileVoid;
+  late int order;
 
-  WidgetTile({required this.tile, required this.isClickable, required this.isTileVoid});
+  WidgetTile({required this.tile, required this.isClickable, required this.isTileVoid, required this.order});
 }
 // ==============
 // Widgets
@@ -37,6 +40,8 @@ class PositionedTilesState extends State<Exo7b> {
   late int indexVoidTile; // index tile blanche
   late  List <WidgetTile> boardTile; // plateau
   int nbCout = 0;
+  bool isWin =false;
+  final winController = ConfettiController();
 
   @override
   void initState() {
@@ -59,9 +64,9 @@ class PositionedTilesState extends State<Exo7b> {
       widget.tiles.length,
           (index) {
         if (index < (widget.tiles.length -1)) {
-          return (WidgetTile(tile : widget.tiles[index],isClickable: false, isTileVoid: false));
+          return (WidgetTile(tile : widget.tiles[index],isClickable: false, isTileVoid: false, order: index));
         } else {
-          return (WidgetTile(tile: widget.tiles[index], isClickable: false, isTileVoid: true)); // Blanc
+          return (WidgetTile(tile: widget.tiles[index], isClickable: false, isTileVoid: true, order: index)); // Blanc
         }
       },
     );
@@ -80,13 +85,16 @@ class PositionedTilesState extends State<Exo7b> {
   void shuffleTiles() {
     Random random = Random();
     double level = (widget.numberOfRows*widget.numberOfRows*widget.levelOfShuffle)*widget.levelOfShuffle;
+    int previousTileIndex = 999;
     for (int i = 0; i < level.toInt() ; i++) {
       List <int> adjacentIndices = findAdjacentTiles(indexVoidTile);
-
-      int randomIndex = adjacentIndices[random.nextInt(adjacentIndices.length)];
+      int randomIndex;
+      do {
+         randomIndex = adjacentIndices[random.nextInt(adjacentIndices.length)];
+      } while (randomIndex == previousTileIndex);
 
       swipeTiles(randomIndex);
-
+      previousTileIndex = indexVoidTile;
       indexVoidTile = randomIndex;
     }
   }
@@ -124,6 +132,7 @@ class PositionedTilesState extends State<Exo7b> {
       setClick(findAdjacentTiles(indexVoidTile));// on met a jour les tuiles clickable
       nbCout++;
     });
+    checkWin();
   }
 
   void swipeTiles (int index){
@@ -131,6 +140,18 @@ class PositionedTilesState extends State<Exo7b> {
     boardTile[indexVoidTile] = boardTile[index];
     boardTile[index] = temp;
   }
+
+void checkWin(){
+    for (int i = 0; i< boardTile.length; i++){
+      if (boardTile[i].order != i){ // si on a pas le bon ordre on sort
+        return;
+      }
+    }
+    print ("Win !");
+    setState(() {
+      winController.play();
+      isWin = true;
+    });
 
   int heures = 0;
   int minutes = 0;
@@ -149,6 +170,7 @@ class PositionedTilesState extends State<Exo7b> {
     });
   }
 
+}
 
   @override
   Widget build(BuildContext context) {
@@ -194,6 +216,11 @@ class PositionedTilesState extends State<Exo7b> {
                 ),
               ),
             ),
+            ConfettiWidget(
+              confettiController: winController,
+              blastDirectionality: BlastDirectionality.explosive,
+              emissionFrequency: 0.1,
+            ),
             Padding(padding: EdgeInsets.all(30)),
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -214,6 +241,43 @@ class PositionedTilesState extends State<Exo7b> {
                   ),
                 ],
               ),
+            Visibility(
+              visible: isWin,
+              child: Column(
+                children: [
+                  const Text(
+                    " Gagné !",
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => Exo7b(tiles: widget.tiles,numberOfRows: widget.numberOfRows,levelOfShuffle: widget.levelOfShuffle),
+                      ));
+                    },
+                    child: const Text('Nouvelle partie'),
+                  ),
+                ],
+              ),
+            ),
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.deepPurple,
+              child: IconButton(
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => Exo1(),
+                  ));
+                },
+                icon: const Icon(Icons.image),
+
+              ),
+            ),
           ],
         ),
       ),
