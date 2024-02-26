@@ -5,11 +5,10 @@ import 'package:flutter/widgets.dart';
 import 'package:tp2_app/screens/exo4.dart';
 
 
-import 'exo7.dart';
+import 'exo7b.dart';
 
 class Exo5b extends StatefulWidget {
-  final bool isVisible;
-  const Exo5b({super.key, required this.isVisible});
+  const Exo5b({super.key});
 
   @override
   State<Exo5b> createState() => _Exo5bState();
@@ -126,27 +125,6 @@ class _Exo5bState extends State<Exo5b> {
                                     ),
                                   ],
                                 ),
-                          ),
-                          SizedBox(
-                            width: 90,
-                            child: Visibility(
-                              visible: widget.isVisible,
-                              child: FloatingActionButton(
-                                  onPressed: () {Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => Exo7(tiles: widgetTiles,numberOfRows: _currentSliderValue,),
-                                  ));},
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.play_arrow),
-                                        Text(" Jouer")
-                                      ],
-                                    ),
-                                  )
-                              ),
-                            
-                            ),
                           ),
                         ],
                       ),
