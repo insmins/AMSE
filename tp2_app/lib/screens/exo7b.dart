@@ -141,17 +141,18 @@ class PositionedTilesState extends State<Exo7b> {
     boardTile[index] = temp;
   }
 
-void checkWin(){
-    for (int i = 0; i< boardTile.length; i++){
-      if (boardTile[i].order != i){ // si on a pas le bon ordre on sort
-        return;
-      }
+void checkWin() {
+  for (int i = 0; i < boardTile.length; i++) {
+    if (boardTile[i].order != i) { // si on a pas le bon ordre on sort
+      return;
     }
-    print ("Win !");
-    setState(() {
-      winController.play();
-      isWin = true;
-    });
+  }
+  print("Win !");
+  setState(() {
+    winController.play();
+    isWin = true;
+  });
+}
 
   int heures = 0;
   int minutes = 0;
@@ -170,7 +171,7 @@ void checkWin(){
     });
   }
 
-}
+
 
   @override
   Widget build(BuildContext context) {
