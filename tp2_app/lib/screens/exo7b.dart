@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tp2_app/screens/exo4.dart';
 
@@ -47,6 +49,8 @@ class PositionedTilesState extends State<Exo7b> {
     shuffleTiles();
     //4. On met les tiles adjacente à la tile "vide" en clickable
     setClick(findAdjacentTiles(indexVoidTile));
+    const d = const Duration(milliseconds: 1000);
+    new Timer.periodic(d, stopWatch);
   }
 
   //1. creation du plateau
@@ -128,6 +132,22 @@ class PositionedTilesState extends State<Exo7b> {
     boardTile[index] = temp;
   }
 
+  int heures = 0;
+  int minutes = 0;
+  int secondes = 0;
+  void stopWatch(Timer t){
+    setState(() {
+      secondes = secondes + 1;
+      if (secondes == 60) {
+        secondes = 0;
+        minutes = minutes + 1;
+      }
+      if (minutes == 60) {
+        minutes = 0;
+        heures = heures + 1;
+      }
+    });
+  }
 
 
   @override
@@ -137,43 +157,65 @@ class PositionedTilesState extends State<Exo7b> {
         title: const Text('Jeu du Taquin'),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Center(
-            child: SizedBox(
-              width: 380,
-              height: 380,
-              child: GridView.count(
-                padding: const EdgeInsets.all(20),
-                crossAxisSpacing: 1,
-                mainAxisSpacing: 1,
-                crossAxisCount: widget.numberOfRows.toInt(),
-                children: [
-                  for (int index = 0; index < boardTile.length; index++)
-                    InkWell(
-                      onTap: boardTile[index].isClickable
-                          ? () {
-                        onAdjacentTileTap(index);
-                      }
-                          : null,
-                      child: Visibility(
-                        visible: !boardTile[index].isTileVoid,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: boardTile[index].isClickable
-                                ? Border.all(color: Colors.red, width: 3)
-                                : null,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: SizedBox(
+                width: 380,
+                height: 380,
+                child: GridView.count(
+                  padding: const EdgeInsets.all(20),
+                  crossAxisSpacing: 1,
+                  mainAxisSpacing: 1,
+                  crossAxisCount: widget.numberOfRows.toInt(),
+                  children: [
+                    for (int index = 0; index < boardTile.length; index++)
+                      InkWell(
+                        onTap: boardTile[index].isClickable
+                            ? () {
+                          onAdjacentTileTap(index);
+                        }
+                            : null,
+                        child: Visibility(
+                          visible: !boardTile[index].isTileVoid,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: boardTile[index].isClickable
+                                  ? Border.all(color: Colors.red, width: 3)
+                                  : null,
+                            ),
+                            child: boardTile[index].tile,
                           ),
-                          child: boardTile[index].tile,
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          Text("$nbCout\n Nombre de coups"),
-        ],
+            Padding(padding: EdgeInsets.all(30)),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(nbCout.toString(),
+                      style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5, color: Colors.deepPurple, decoration: TextDecoration.none)
+                  ),
+                  Text(" coups.",
+                  style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.01, color: Colors.black, decoration: TextDecoration.none )),
+            ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Temps écoulé : " + heures.toString().padLeft(2, '0') + ":"
+                      + minutes.toString().padLeft(2, '0') + ":"
+                      + secondes.toString().padLeft(2, '0'),
+                    style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 0.5, color: Colors.black, decorationColor: Colors.deepPurple),
+                  ),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
