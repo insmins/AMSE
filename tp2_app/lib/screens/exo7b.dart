@@ -14,8 +14,9 @@ class WidgetTile {
   late Widget tile;
   late bool isClickable;
   late bool isTileVoid;
+  late int order;
 
-  WidgetTile({required this.tile, required this.isClickable, required this.isTileVoid});
+  WidgetTile({required this.tile, required this.isClickable, required this.isTileVoid, required this.order});
 }
 // ==============
 // Widgets
@@ -55,9 +56,9 @@ class PositionedTilesState extends State<Exo7b> {
       widget.tiles.length,
           (index) {
         if (index < (widget.tiles.length -1)) {
-          return (WidgetTile(tile : widget.tiles[index],isClickable: false, isTileVoid: false));
+          return (WidgetTile(tile : widget.tiles[index],isClickable: false, isTileVoid: false, order: index));
         } else {
-          return (WidgetTile(tile: widget.tiles[index], isClickable: false, isTileVoid: true)); // Blanc
+          return (WidgetTile(tile: widget.tiles[index], isClickable: false, isTileVoid: true, order: index)); // Blanc
         }
       },
     );
@@ -76,13 +77,16 @@ class PositionedTilesState extends State<Exo7b> {
   void shuffleTiles() {
     Random random = Random();
     double level = (widget.numberOfRows*widget.numberOfRows*widget.levelOfShuffle)*widget.levelOfShuffle;
+    int previousTileIndex = 999;
     for (int i = 0; i < level.toInt() ; i++) {
       List <int> adjacentIndices = findAdjacentTiles(indexVoidTile);
-
-      int randomIndex = adjacentIndices[random.nextInt(adjacentIndices.length)];
+      int randomIndex;
+      do {
+         randomIndex = adjacentIndices[random.nextInt(adjacentIndices.length)];
+      } while (randomIndex == previousTileIndex);
 
       swipeTiles(randomIndex);
-
+      previousTileIndex = indexVoidTile;
       indexVoidTile = randomIndex;
     }
   }
@@ -128,7 +132,13 @@ class PositionedTilesState extends State<Exo7b> {
     boardTile[index] = temp;
   }
 
-
+void checkWin (){
+    for (int i =0; i< boardTile.length; i++){
+      if (boardTile[i].order == i){
+        //
+      }
+    }
+}
 
   @override
   Widget build(BuildContext context) {
