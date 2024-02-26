@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:tp2_app/screens/exo1.dart';
 import 'package:tp2_app/screens/exo4.dart';
 
 
@@ -36,6 +38,8 @@ class PositionedTilesState extends State<Exo7b> {
   late int indexVoidTile; // index tile blanche
   late  List <WidgetTile> boardTile; // plateau
   int nbCout = 0;
+  bool isWin =false;
+  final winController = ConfettiController();
 
   @override
   void initState() {
@@ -124,6 +128,7 @@ class PositionedTilesState extends State<Exo7b> {
       setClick(findAdjacentTiles(indexVoidTile));// on met a jour les tuiles clickable
       nbCout++;
     });
+    checkWin();
   }
 
   void swipeTiles (int index){
@@ -132,12 +137,19 @@ class PositionedTilesState extends State<Exo7b> {
     boardTile[index] = temp;
   }
 
-void checkWin (){
-    for (int i =0; i< boardTile.length; i++){
-      if (boardTile[i].order == i){
-        //
+void checkWin(){
+    for (int i = 0; i< boardTile.length; i++){
+      if (boardTile[i].order != i){ // si on a pas le bon ordre on sort
+        return;
       }
     }
+    print ("Win !");
+    setState(() {
+      winController.play();
+      isWin = true;
+    });
+    print(isWin);
+
 }
 
   @override
@@ -182,7 +194,49 @@ void checkWin (){
               ),
             ),
           ),
+          ConfettiWidget(
+            confettiController: winController,
+            blastDirectionality: BlastDirectionality.explosive,
+            emissionFrequency: 0.1,
+          ),
           Text("$nbCout\n Nombre de coups"),
+          Visibility(
+            visible: isWin,
+            child: Column(
+              children: [
+                const Text(
+                  " Gagné !",
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => Exo7b(tiles: widget.tiles,numberOfRows: widget.numberOfRows,levelOfShuffle: widget.levelOfShuffle),
+                    ));
+                  },
+                  child: const Text('Nouvelle partie'),
+                ),
+              ],
+            ),
+          ),
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.deepPurple,
+            child: IconButton(
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => Exo1(),
+                  ));
+                  },
+                icon: const Icon(Icons.image),
+
+              ),
+          ),
         ],
       ),
     );
