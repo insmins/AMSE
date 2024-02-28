@@ -22,7 +22,7 @@ class _Exo2State extends State<Exo2> {
       transfo = Matrix4.skewY(_sliderSki)
         ..rotateZ(_sliderHorloge)
         ..leftTranslate(_sliderDepl)
-        ..scale(-1, 1);
+        ..scale(-1.0, 1.0);
     }
     else {
       transfo = Matrix4.skewY(_sliderSki)
@@ -96,15 +96,20 @@ class _Exo2State extends State<Exo2> {
               Text("Translation"),
             ]
             ),
-            Checkbox(
-                value: mirror,
-                onChanged: (f){
-                  if (f != null){
-                    setState(() {
-                      mirror = !mirror;
-                    });
-                  }
-                })
+            Row(
+              children: [
+                Checkbox(
+                  value: mirror,
+                  onChanged: (f){
+                    if (f != null){
+                      setState(() {
+                        mirror = !mirror;
+                      });
+                    }
+                  }),
+                Text("Miroir"),
+              ]
+            )
           ]
         ),
       ),
