@@ -301,33 +301,58 @@ class PositionedTilesState extends State<Exo7b> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Exo7a()
-                          ));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Exo7a()));
                     },
                     child: const Text('Nouvelle partie'),
                   ),
                 ],
               )
             else
-              Ink(
-                decoration: ShapeDecoration(
-                  color: Colors.deepPurple,
-                  shape: CircleBorder(),
-                ),
-                child: IconButton(
-                  padding: EdgeInsets.all(19),
-                  iconSize: 27.0,
-                  color: Colors.white,
-                  onPressed: () {
-                    setState(() {
-                      showImage = !showImage;
-                    });
-                  },
-                  icon: const Icon(Icons.image),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Ink(
+                    decoration: ShapeDecoration(
+                      color: Colors.deepPurple,
+                      shape: CircleBorder(),
+                    ),
+                    child: IconButton(
+                      padding: EdgeInsets.all(19),
+                      iconSize: 27.0,
+                      color: Colors.white,
+                      onPressed: () {
+                        setState(() {
+                          showImage = !showImage;
+                        });
+                      },
+                      icon: const Icon(Icons.image),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.all(20)),
+                  Ink(
+                    decoration: ShapeDecoration(
+                      color: Colors.deepPurple,
+                      shape: CircleBorder(),
+                    ),
+                    child: IconButton(
+                      padding: EdgeInsets.all(19),
+                      iconSize: 27.0,
+                      color: Colors.white,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Exo7b(
+                                  tiles: widget.tiles,
+                                  numberOfRows: widget.numberOfRows,
+                                  levelOfShuffle: widget.levelOfShuffle),
+                            ));
+                      },
+                      icon: Icon(Icons.refresh),
+                    ),
+                  ),
+                ],
               ),
           ],
         ),
