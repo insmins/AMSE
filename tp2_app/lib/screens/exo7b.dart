@@ -285,9 +285,9 @@ class PositionedTilesState extends State<Exo7b> {
                 ),
               ],
             ),
-            Visibility(
-              visible: isWin,
-              child: Column(
+            Padding(padding: EdgeInsets.all(15)),
+            if (isWin)
+              Column(
                 children: [
                   const Text(
                     " Gagné !",
@@ -311,21 +311,25 @@ class PositionedTilesState extends State<Exo7b> {
                     child: const Text('Nouvelle partie'),
                   ),
                 ],
+              )
+            else
+              Ink(
+                decoration: ShapeDecoration(
+                  color: Colors.deepPurple,
+                  shape: CircleBorder(),
+                ),
+                child: IconButton(
+                  padding: EdgeInsets.all(19),
+                  iconSize: 27.0,
+                  color: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      showImage = !showImage;
+                    });
+                  },
+                  icon: const Icon(Icons.image),
+                ),
               ),
-            ),
-            CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.deepPurple,
-              child: IconButton(
-                color: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    showImage = !showImage;
-                  });
-                },
-                icon: const Icon(Icons.image),
-              ),
-            ),
           ],
         ),
       ),
