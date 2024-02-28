@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:tp2_app/screens/exo1.dart';
 import 'package:tp2_app/screens/exo4.dart';
 
+import 'exo7a.dart';
+
 // =================
 // Model
 //==================
@@ -302,10 +304,7 @@ class PositionedTilesState extends State<Exo7b> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Exo7b(
-                                tiles: widget.tiles,
-                                numberOfRows: widget.numberOfRows,
-                                levelOfShuffle: widget.levelOfShuffle),
+                            builder: (context) => Exo7a()
                           ));
                     },
                     child: const Text('Nouvelle partie'),
