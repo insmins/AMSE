@@ -49,9 +49,15 @@ class PositionedTilesState extends State<Exo7b> {
   late int indexVoidTile; // index tile blanche
   late List<WidgetTile> boardTile; // plateau
   late List<WidgetTile> rightOrderBoardTile;
-  int nbCout = 0;
+  int nbCoup = 0;
   bool isWin = false;
   final winController = ConfettiController();
+  bool showImage = false;
+  bool returnBackMove = false;
+  int heures = 0;
+  int minutes = 0;
+  int secondes = 0;
+  int formerVoidIndex = 999;
 
   @override
   void initState() {
@@ -151,11 +157,18 @@ class PositionedTilesState extends State<Exo7b> {
   void onAdjacentTileTap(int adjacentIndex) {
     setState(() {
       swipeTiles(adjacentIndex);
+      //----------
+       formerVoidIndex = indexVoidTile; // on initialise
+      print ('onTileTap_formerVoidIndex $formerVoidIndex');
+      //--------
       indexVoidTile = adjacentIndex; // on change la tile blanche
       setClick(findAdjacentTiles(
           indexVoidTile)); // on met a jour les tuiles clickable
-      nbCout++;
+      nbCoup++;
     });
+    if ( returnBackMove == false){
+      returnBackMove = true;
+    }
     checkWin();
   }
 
@@ -179,25 +192,37 @@ class PositionedTilesState extends State<Exo7b> {
     });
   }
 
-  int heures = 0;
-  int minutes = 0;
-  int secondes = 0;
-
   void stopWatch(Timer t) {
-    setState(() {
-      secondes = secondes + 1;
-      if (secondes == 60) {
-        secondes = 0;
-        minutes = minutes + 1;
-      }
-      if (minutes == 60) {
-        minutes = 0;
-        heures = heures + 1;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        secondes = secondes + 1;
+        if (secondes == 60) {
+          secondes = 0;
+          minutes = minutes + 1;
+        }
+        if (minutes == 60) {
+          minutes = 0;
+          heures = heures + 1;
+        }
+      });
+    }
   }
 
-  bool showImage = false;
+  void returnBackOneMove () {
+    if (returnBackMove) {
+      print ('!!');
+      print ('formerVoidIndex $formerVoidIndex');
+      setState(() {
+        swipeTiles(formerVoidIndex);
+        indexVoidTile = formerVoidIndex;
+        setClick(findAdjacentTiles(
+            indexVoidTile));
+      });
+      returnBackMove = false;
+      nbCoup --;
+    }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -258,7 +283,7 @@ class PositionedTilesState extends State<Exo7b> {
             ),
             Padding(padding: EdgeInsets.all(20)),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(nbCout.toString(),
+              Text(nbCoup.toString(),
                   style: DefaultTextStyle.of(context).style.apply(
                       fontSizeFactor: 1.5,
                       color: Colors.deepPurple,
@@ -361,16 +386,34 @@ class PositionedTilesState extends State<Exo7b> {
                         iconSize: 27.0,
                         color: Colors.white,
                         onPressed: () {
-                          setState(() {
-                            showImage = !showImage;
-                          });
+                          if (mounted) {
+                            setState(() {
+                              showImage = !showImage;
+                            });
+                          }
                         },
                         icon: showImage
                             ? const Icon(Icons.remove_red_eye_outlined)
                             : const Icon(Icons.visibility_off_outlined),
                       ),
                     ),
-                    Padding(padding: EdgeInsets.all(20)),
+                    Padding(padding: EdgeInsets.all(7)),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: returnBackMove ? Colors.deepPurple : Colors.grey,
+                        shape: CircleBorder(),
+                      ),
+                      child: IconButton(
+                        padding: EdgeInsets.all(19),
+                        iconSize: 27.0,
+                        color: Colors.white,
+                        onPressed: () {
+                          returnBackOneMove();
+                        },
+                        icon:  Icon(Icons.keyboard_return_outlined),
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.all(7)),
                     Ink(
                       decoration: ShapeDecoration(
                         color: Colors.deepPurple,
