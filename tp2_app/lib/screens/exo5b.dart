@@ -57,7 +57,7 @@ class _Exo5bState extends State<Exo5b> {
     List<Tile> tile = [];
     for (int i = 0; i < tileAlignements.length; i++) {
       //on créé tout les tiles
-      tile.add(Tile(imageURL: 'https://picsum.photos/512',
+      tile.add(Tile(
           alignment: tileAlignements[i]));
     }
 

@@ -23,7 +23,7 @@ List <Exercice> exo =[
   Exercice("Exercice 5b", "Configurable Taquin Board",  Exo5b()),
   Exercice("Exercice 6a", "Moving tile", PositionedTiles()),
   Exercice("Exercice 6b", "Moving tiles in grid", Exo6b()),
-  Exercice("Exercice 7a", "Jeu du taquin", Exo7a()),
+  Exercice("Exercice 7", "Jeu du taquin", Exo7a()),
 
 
 ];

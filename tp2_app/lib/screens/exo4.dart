@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 // ==============
 // Models
@@ -8,14 +9,15 @@ import 'package:flutter/material.dart';
 
 
 class Tile {
-  String imageURL;
+  String imageURL='https://picsum.photos/512';
   /* Explication alignement : ---------------------------------------
 *  Les valeurs sont comprises entre -1 et 1, où -1 signifie le côté gauche ou
 *  le haut, 1 signifie le côté droit ou le bas, et 0 signifie le centre.
    */
   Alignment alignment;
-
-  Tile({required this.imageURL, required this.alignment});
+  File? imagePicker;
+  Image? imageAsset;
+  Tile({required this.alignment,this.imagePicker, this.imageAsset});
 
   Widget croppedImageTile(double  widthFactor, double heightFactor) {
     return FittedBox(
@@ -30,10 +32,39 @@ class Tile {
       ),
     );
   }
+
+  Widget croppedImagePickerTile(double  widthFactor, double heightFactor) {
+    return FittedBox(
+      fit: BoxFit.fill,
+      child: ClipRect(
+        child: Align(
+          alignment: alignment,
+          widthFactor: widthFactor,
+          heightFactor: heightFactor,
+          child: Image.file(imagePicker!),
+        ),
+      ),
+    );
+  }
+
+
+  Widget croppedImageAssetTile(double  widthFactor, double heightFactor) {
+    return FittedBox(
+      fit: BoxFit.fill,
+      child: ClipRect(
+        child: Align(
+          alignment: alignment,
+          widthFactor: widthFactor,
+          heightFactor: heightFactor,
+          child: imageAsset,
+        ),
+      ),
+    );
+  }
 }
 
 Tile tile = Tile(
-    imageURL: 'https://picsum.photos/512', alignment: const Alignment(0,0));
+     alignment: const Alignment(0,0));
 
 class DisplayTileWidget extends StatelessWidget {
   const DisplayTileWidget({super.key});

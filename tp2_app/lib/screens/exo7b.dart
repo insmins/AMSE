@@ -65,7 +65,7 @@ class PositionedTilesState extends State<Exo7b> {
     shuffleTiles();
     //4. On met les tiles adjacente à la tile "vide" en clickable
     setClick(findAdjacentTiles(indexVoidTile));
-    const d = const Duration(milliseconds: 1000);
+    const d = Duration(milliseconds: 1000);
     new Timer.periodic(d, stopWatch);
   }
 
@@ -106,8 +106,7 @@ class PositionedTilesState extends State<Exo7b> {
   void shuffleTiles() {
     Random random = Random();
     double level =
-        (widget.numberOfRows * widget.numberOfRows * widget.levelOfShuffle) *
-            widget.levelOfShuffle;
+        (widget.numberOfRows * widget.numberOfRows * widget.levelOfShuffle) /2;
     int previousTileIndex = 999;
     for (int i = 0; i < level.toInt(); i++) {
       List<int> adjacentIndices = findAdjacentTiles(indexVoidTile);
@@ -242,7 +241,7 @@ class PositionedTilesState extends State<Exo7b> {
                             child: Visibility(
                               visible: !boardTile[index].isTileVoid,
                               child: Opacity(
-                                opacity: boardTile[index].isClickable ? 0.4 : 1,
+                                opacity: boardTile[index].isClickable ? 0.7 : 1,
                                 child: boardTile[index].tile,
                               ),
                             ),
@@ -257,7 +256,7 @@ class PositionedTilesState extends State<Exo7b> {
               blastDirectionality: BlastDirectionality.explosive,
               emissionFrequency: 0.1,
             ),
-            Padding(padding: EdgeInsets.all(30)),
+            Padding(padding: EdgeInsets.all(20)),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(nbCout.toString(),
                   style: DefaultTextStyle.of(context).style.apply(
@@ -299,60 +298,103 @@ class PositionedTilesState extends State<Exo7b> {
                       color: Colors.deepPurple,
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Exo7a()));
-                    },
-                    child: const Text('Nouvelle partie'),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 25),
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.pushReplacement(context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Exo7b(
+                                      tiles: widget.tiles,
+                                      numberOfRows: widget.numberOfRows,
+                                      levelOfShuffle: widget.levelOfShuffle,
+                                    ),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20), // Ajustez les valeurs selon vos préférences
+                              ),
+                              icon: Icon(Icons.refresh), // Icône de rafraîchissement (flèche circulaire)
+                              label: const Text('Recommencer', style: TextStyle(fontSize: 16)), // Ajustez la taille du texte
+                            ),
+                          ),
+
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Exo7a()));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20), // Ajustez les valeurs selon vos préférences
+                            ),
+                            icon: Icon(Icons.home), // Icône de maison
+                            label: const Text('Revenir à l\'accueil', style: TextStyle(fontSize: 16)), // Ajustez la taille du texte
+                          ),
+                        ],
+                      ),
+
+
+                    ),
                   ),
                 ],
               )
             else
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: Colors.deepPurple,
-                      shape: CircleBorder(),
+              Padding(
+                padding: const EdgeInsets.only(top:35.0,bottom: 35.0),
+
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: Colors.deepPurple,
+                        shape: CircleBorder(),
+                      ),
+                      child: IconButton(
+                        padding: EdgeInsets.all(19),
+                        iconSize: 27.0,
+                        color: Colors.white,
+                        onPressed: () {
+                          setState(() {
+                            showImage = !showImage;
+                          });
+                        },
+                        icon: showImage
+                            ? const Icon(Icons.remove_red_eye_outlined)
+                            : const Icon(Icons.visibility_off_outlined),
+                      ),
                     ),
-                    child: IconButton(
-                      padding: EdgeInsets.all(19),
-                      iconSize: 27.0,
-                      color: Colors.white,
-                      onPressed: () {
-                        setState(() {
-                          showImage = !showImage;
-                        });
-                      },
-                      icon: const Icon(Icons.image),
+                    Padding(padding: EdgeInsets.all(20)),
+                    Ink(
+                      decoration: ShapeDecoration(
+                        color: Colors.deepPurple,
+                        shape: CircleBorder(),
+                      ),
+                      child: IconButton(
+                        padding: EdgeInsets.all(19),
+                        iconSize: 27.0,
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Exo7b(
+                                    tiles: widget.tiles,
+                                    numberOfRows: widget.numberOfRows,
+                                    levelOfShuffle: widget.levelOfShuffle),
+                              ));
+                        },
+                        icon: Icon(Icons.refresh),
+                      ),
                     ),
-                  ),
-                  Padding(padding: EdgeInsets.all(20)),
-                  Ink(
-                    decoration: ShapeDecoration(
-                      color: Colors.deepPurple,
-                      shape: CircleBorder(),
-                    ),
-                    child: IconButton(
-                      padding: EdgeInsets.all(19),
-                      iconSize: 27.0,
-                      color: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Exo7b(
-                                  tiles: widget.tiles,
-                                  numberOfRows: widget.numberOfRows,
-                                  levelOfShuffle: widget.levelOfShuffle),
-                            ));
-                      },
-                      icon: Icon(Icons.refresh),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
           ],
         ),

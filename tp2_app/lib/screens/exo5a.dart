@@ -17,7 +17,7 @@ class Exo5a extends StatelessWidget {
 
     List<Tile> tile = [];
     for (int i = 0; i < tileAlignements.length; i++) {
-      tile.add(Tile(imageURL: 'https://picsum.photos/512', alignment: tileAlignements[i]));
+      tile.add(Tile(alignment: tileAlignements[i]));
 
     }
     return Scaffold(
