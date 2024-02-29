@@ -329,9 +329,7 @@ class PositionedTilesState extends State<Exo7b> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 25),
-                            child: ElevatedButton.icon(
+                             ElevatedButton.icon(
                               onPressed: () {
                                 Navigator.pushReplacement(context,
                                   MaterialPageRoute(
@@ -349,17 +347,20 @@ class PositionedTilesState extends State<Exo7b> {
                               icon: Icon(Icons.refresh), // Icône de rafraîchissement (flèche circulaire)
                               label: const Text('Recommencer', style: TextStyle(fontSize: 16)), // Ajustez la taille du texte
                             ),
-                          ),
 
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Exo7a()));
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20), // Ajustez les valeurs selon vos préférences
+
+                          Padding(
+                            padding: const EdgeInsets.only(top: 25.0, bottom: 40),
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Exo7a()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20), // Ajustez les valeurs selon vos préférences
+                              ),
+                              icon: Icon(Icons.home), // Icône de maison
+                              label: const Text('Revenir à l\'accueil', style: TextStyle(fontSize: 16)), // Ajustez la taille du texte
                             ),
-                            icon: Icon(Icons.home), // Icône de maison
-                            label: const Text('Revenir à l\'accueil', style: TextStyle(fontSize: 16)), // Ajustez la taille du texte
                           ),
                         ],
                       ),

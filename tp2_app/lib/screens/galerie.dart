@@ -30,7 +30,7 @@ class Galerie extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => Exo7a(imageAsset: Image.asset(imagePaths[index]))),
               );
