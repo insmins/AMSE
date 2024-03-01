@@ -203,7 +203,7 @@ class _Exo7aState extends State<Exo7a> {
                               child: Icon(Icons.add_to_photos,color: Color(0xfff7f1fb)),
                             ),
                             Text(
-                                "Nouvelle Images",
+                                "Choisir une image",
                               style: TextStyle(
                                 color: Color(0xfff7f1fb),
                               ),
