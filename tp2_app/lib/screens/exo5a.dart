@@ -44,7 +44,7 @@ class Exo5a extends StatelessWidget {
   }
   Widget createTileWidgetFrom(Tile tile) {
     return InkWell(
-      child: tile.croppedImageTile(0.3,0.3),
+      child: tile.croppedImageTile(1/3,1/3),
       onTap: () {
         print("La tuile a été tapée !");
       },
